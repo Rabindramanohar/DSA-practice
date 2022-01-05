@@ -1,15 +1,12 @@
 class Solution {
     public int firstUniqChar(String s) {
-        Map<Character, Integer> linkedHm = new LinkedHashMap<>();
+        int[] count = new int[26];
         for(int i=0; i<s.length(); i++) {
-            if(linkedHm.containsKey(s.charAt(i))) {
-                linkedHm.put(s.charAt(i), linkedHm.get(s.charAt(i))+1);
-            } else
-                linkedHm.put(s.charAt(i), 0);
+            count[s.charAt(i)-'a']++;
         }
         
         for(int i=0; i<s.length(); i++) {
-            if(linkedHm.get(s.charAt(i)) == 0)
+            if (count[(s.charAt(i)-'a')] == 1)
                 return i;
         }
         
