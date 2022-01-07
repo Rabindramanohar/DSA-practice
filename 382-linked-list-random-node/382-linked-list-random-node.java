@@ -9,18 +9,21 @@
  * }
  */
 class Solution {
-    List<Integer> range = new ArrayList<>();
-    
+    private ListNode head;
     public Solution(ListNode head) {
-        while(head != null) {
-            range.add(head.val);
-            head = head.next;
-        }
+        this.head = head;
     }
     
     public int getRandom() {
-        int idx = (int)(Math.random() * range.size());
-        return range.get(idx);
+        int scope = 1, chosenVal = 0;
+        ListNode current = this.head;
+        while(current != null) {
+            if(Math.random() < 1.0/scope)
+                chosenVal = current.val;
+            scope += 1;
+            current = current.next;
+        }
+        return chosenVal;
     }
 }
 
