@@ -1,42 +1,28 @@
 class Solution {
-    public int myAtoi(String input) {
-        int sign = 1; 
-        int result = 0; 
-        int index = 0;
-        int n = input.length();
+    public int myAtoi(String s) {
+        int sign = 1;
+        int result = 0;
+        int idx = 0;
+        int n = s.length();
+        while(idx < n && s.charAt(idx) == ' ')
+            idx++;
         
-        // Discard all spaces from the beginning of the input string.
-        while (index < n && input.charAt(index) == ' ') { 
-            index++; 
-        }
-        
-        // sign = +1, if it's positive number, otherwise sign = -1. 
-        if (index < n && input.charAt(index) == '+') {
+        if(idx < n && s.charAt(idx) == '+') {
             sign = 1;
-            index++;
-        } else if (index < n && input.charAt(index) == '-') {
+            idx++;
+        } else if(idx < n && s.charAt(idx) == '-') {
             sign = -1;
-            index++;
+            idx++;
         }
         
-        // Traverse next digits of input and stop if it is not a digit
-        while (index < n && Character.isDigit(input.charAt(index))) {
-            int digit = input.charAt(index) - '0';
-
-            // Check overflow and underflow conditions. 
-            if ((result > Integer.MAX_VALUE / 10) || 
-                (result == Integer.MAX_VALUE / 10 && digit > Integer.MAX_VALUE % 10)) {     
-                // If integer overflowed return 2^31-1, otherwise if underflowed return -2^31.    
+        while(idx < n && Character.isDigit(s.charAt(idx))) {
+            int digit = s.charAt(idx)-'0';
+            if((result > Integer.MAX_VALUE/10) || (result == Integer.MAX_VALUE/10 && digit > Integer.MAX_VALUE%10))
                 return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            }
             
-            // Append current digit to the result.
-            result = 10 * result + digit;
-            index++;
+            result = 10 *result + digit;
+            idx++;
         }
-        
-        // We have formed a valid number without any overflow/underflow.
-        // Return it after multiplying it with its sign.
-        return sign * result;
+        return sign*result;
     }
 }
