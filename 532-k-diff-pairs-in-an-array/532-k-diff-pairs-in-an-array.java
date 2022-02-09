@@ -1,13 +1,15 @@
 class Solution {
     public int findPairs(int[] nums, int k) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        Set<Integer> hs = new HashSet<>();
+        Map<Integer, Integer> hm = new HashMap<>();
+        int n = nums.length, cnt = 0;
         
-        for(int i=0; i<n; i++) {
-            if(Arrays.binarySearch(nums, i+1, n, nums[i]+k) > 0)
-                hs.add(nums[i]);
-        }
-        return hs.size();
+        for(int ele : nums) 
+            hm.put(ele, hm.getOrDefault(ele, 0)+1);
+        
+        for(int ele : hm.keySet())
+            if(k>0 && hm.containsKey(k+ele) || k==0 && hm.get(ele)>1)
+                cnt++;
+        
+        return cnt;
     }
 }
