@@ -1,26 +1,24 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
-        boolean[] vis = new boolean[nums.length];
-        generatePermutes(ans, nums, new ArrayList<>(), vis);
-        
+        helper(nums, ans, new boolean[nums.length], new ArrayList<>());
         return ans;
     }
     
-    public void generatePermutes(List<List<Integer>> ans, int[] arr, List<Integer> curr, boolean[] vis) {
-        
+    private void helper(int[] arr, List<List<Integer>> ans, boolean[] vis, List<Integer> curr) {
         if(curr.size() == arr.length) {
-            ans.add(new ArrayList<Integer>(curr));
+            ans.add(new ArrayList<>(curr));
             return;
         }
         
         for(int i=0; i<arr.length; i++) {
-            if(vis[i] == true) continue;
-            curr.add(arr[i]);
-            vis[i] = true;
-            generatePermutes(ans, arr, curr, vis);
-            curr.remove(curr.size()-1);
-            vis[i]=false;
+            if(!vis[i]) { // avoid adding one elements multiple times
+                curr.add(arr[i]);
+                vis[i] = true;
+                helper(arr, ans, vis, curr); // recursively add arr element to curr ds
+                curr.remove(curr.size()-1); // backtracking so need to remove the ele from curr ds and unmark the vis 
+                vis[i] = false;
+            }
         }
     }
 }
