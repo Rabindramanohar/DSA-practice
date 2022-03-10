@@ -1,31 +1,28 @@
 class Solution {
-    public List<List<String>> partition(String str) {
+    public List<List<String>> partition(String s) {
         List<List<String>> ans = new ArrayList<>();
-        List<String> step = new ArrayList<>();
-        helper(str, 0, step, ans);
+        helper(s, ans, 0, new ArrayList<>());
         return ans;
     }
     
-    public void helper(String str, int idx, List<String> step, List<List<String>> ans) {
-        //base case
-        if(idx == str.length()) {
-            ans.add(new ArrayList<>(step));
+    private void helper(String s, List<List<String>> ans, int idx, List<String> curr) {
+        if(idx == s.length()) {
+            ans.add(new ArrayList<String>(curr));
             return;
         }
         
-        // recursion logic
-        for(int i=idx; i<str.length(); i++) {
-            if(isPalindrom(str, idx, i)) {
-                step.add(str.substring(idx, i+1));
-                helper(str, i+1, step, ans);
-                step.remove(step.size()-1);
+        for(int i=idx; i<s.length(); i++) {
+            if(isPalindrom(idx, i, s)) {
+                curr.add(s.substring(idx, i+1));
+                helper(s, ans, i+1, curr);
+                curr.remove(curr.size()-1);
             }
         }
     }
     
-    public boolean isPalindrom(String str, int start, int end) {
-        while(start <= end) {
-            if(str.charAt(start++) != str.charAt(end--))
+    private boolean isPalindrom(int i, int j, String s) {
+        while(i<=j) {
+            if(s.charAt(i++) != s.charAt(j--))
                 return false;
         }
         return true;
