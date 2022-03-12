@@ -14,25 +14,63 @@ class Node {
 */
 
 class Solution {
-    Map<Node, Node> hm = new HashMap<>();
+    // efficient code 
     public Node copyRandomList(Node head) {
-        // brute force: T= O(N);
-        Node newH = getCopy(head);
-        for(Node key: hm.keySet()) {
-            Node copy = hm.get(key);
-            copy.random = hm.get(key.random);
+        Node iter = head;
+        Node front = head;
+        // 1. make copy of each node and link them together side by side in a single list.
+        while(iter != null) {
+            front = iter.next;
+            Node copy = new Node(iter.val);
+            iter.next = copy;
+            copy.next = front;
+            iter = front;
         }
-        return newH;
-    }
-    
-    private Node getCopy(Node node) {
-        if(node == null)
-            return null;
-        
-        Node newH = new Node(node.val);
-        newH.next = getCopy(node.next);
-        hm.put(node, newH);
-        
-        return newH;
+        // 2. assign random pointers for the copy nodes.
+        iter = head;
+        while(iter != null) {
+            if(iter.random != null)
+                iter.next.random = iter.random.next;
+            iter = iter.next.next;
+        }
+        // 3. restore the original list and extract the copy list.
+        iter = head;
+        Node tmpHead = new Node(0);
+        Node copy = tmpHead;
+        while(iter != null) {
+            front = iter.next.next;
+            // extract the copy
+            copy.next = iter.next;
+            copy = copy.next;
+            // restore the original list
+            iter.next = front;
+            iter = front;
+        }
+        return tmpHead.next;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
