@@ -8,10 +8,11 @@ class Solution {
             else if(!Arrays.asList("", ".", "..").contains(t))
                 st.push(t);
         }
-        StringBuilder sb = new StringBuilder();
-        for(String s : st)
-            sb.append("/").append(s);
+//         StringBuilder sb = new StringBuilder();
+//         for(String s : st)
+//             sb.append("/").append(s);
         
-        return sb.length() == 0 ? "/" : sb.toString();
+//         return sb.length() == 0 ? "/" : sb.toString();
+        return "/"+String.join("/", st);
     }
 }
