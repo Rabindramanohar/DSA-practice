@@ -1,31 +1,35 @@
-
 class Solution {
-    //memoization T= O(n*n*m);
+    // binary search T=O(nlogs), S=O(1);
     public int splitArray(int[] nums, int m) {
-        int n = nums.length;
-        int[][] dp = new int[n+1][m+1];
-        for(int[] row : dp)
-            Arrays.fill(row, -1);
-        int[] prefixSum = new int[n+1];
-        for(int i=0; i<n ;i++)
-            prefixSum[i+1] = prefixSum[i] + nums[i];
-        return minLargestSplitSum(prefixSum, 0, m, dp);
+        int sum = 0;
+        int maxEle = (int)(-1e9);
+        for(int ele : nums) {
+            sum += ele;
+            maxEle = Math.max(maxEle, ele);
+        }
+        int l = maxEle, h = sum;
+        int ans = 0;
+        while(l <= h) {
+            int mid = l+(h-l)/2;
+            if(reqSubarrays(nums, mid) <= m) {
+                h = mid-1;
+                ans = mid;
+            } else
+                l = mid+1;
+        }
+        return ans;
     }
     
-    private int minLargestSplitSum(int[] arr, int idx, int m, int[][] dp) {
-        int n = arr.length-1;
-        if(dp[idx][m] != -1) return dp[idx][m];
-        if(m==1)
-            return arr[n]-arr[idx];
-        int minSplitSum = (int)(1e9);
-        for(int i=idx; i<=n-m; i++) {
-            int first = arr[i+1]-arr[idx];
-            int largestSplitSum = Math.max(first, minLargestSplitSum(arr, i+1, m-1, dp));
-            minSplitSum = Math.min(minSplitSum, largestSplitSum);
-            
-            if(first >= minSplitSum)
-                break;
+    private int reqSubarrays(int[] nums, int mid) {
+        int curr = 0, split = 0;
+        for(int ele : nums) {
+            if(curr + ele <= mid)
+                curr += ele;
+            else {
+                curr = ele;
+                split++;
+            }
         }
-        return dp[idx][m] = minSplitSum;
+        return split + 1;
     }
 }
