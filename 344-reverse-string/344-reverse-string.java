@@ -1,18 +1,16 @@
 class Solution {
     public void reverseString(char[] s) {
-        
-        reverseStringFunc(0, s.length-1, s);
+        helper(0, s.length-1, s);
     }
-    
-    public void reverseStringFunc(int l, int r, char[] s) {
-        if(l>=r)
-            return;
+    private void helper(int l, int r, char[] s) {
+        // base case:
+        if(l >= r) return;
         
-        // swap
+        //swap
         char tmp = s[l];
         s[l] = s[r];
-        s[r] = tmp; 
+        s[r] = tmp;
         
-        reverseStringFunc(l+1, r-1, s);
+        helper(l+1, r-1, s);
     }
 }
