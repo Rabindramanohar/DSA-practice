@@ -10,13 +10,13 @@
  */
 class Solution {
     public ListNode swapNodes(ListNode head, int k) {
-        ListNode n1=null, n2=null, curr=head;
+        ListNode n1=head, n2=head, curr=head;
+        int cnt = 1;
+        
         while(curr != null) {
-            n2 = n2==null ? null : n2.next;
-            if(--k == 0) {
-                n1 = curr;
-                n2 = head;
-            }
+            if(cnt < k) n1 = n1.next;
+            else if(cnt > k) n2 = n2.next;
+            cnt++;
             curr = curr.next;
         }
         int tmp = n1.val;
