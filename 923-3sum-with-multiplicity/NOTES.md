@@ -1,1 +1,1 @@
-​
+[formula](https://photos.app.goo.gl/MAsUTWxc3ydXxoUX9)
