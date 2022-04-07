@@ -1,10 +1,15 @@
 class Solution {
     public int lastStoneWeight(int[] stones) {
-        Arrays.sort(stones);
-        for(int i=stones.length-1; i>0; i--) {
-            stones[i-1] = stones[i]-stones[i-1];
-            Arrays.sort(stones);
+        // using Priority Queue
+        PriorityQueue<Integer> q = new PriorityQueue<>((a, b) -> (b-a));
+        for(int ele : stones)
+            q.add(ele);
+        while(q.size() > 1) {
+            int x = q.poll();
+            int y = q.poll();
+            q.add(x-y);
         }
-        return stones[0];
+        return q.poll();
     }
 }
+
