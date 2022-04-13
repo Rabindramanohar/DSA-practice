@@ -2,19 +2,18 @@ class Solution {
     public int[][] generateMatrix(int n) {
         int[][] ans = new int[n][n];
         int cnt=1;
-        for(int l=0; l<(n+1)/2; l++) {
-            // left-> right
-            for(int p=l; p<n-l; p++)
-                ans[l][p] = cnt++;
-            // top->bottom
-            for(int p=l+1; p<n-l; p++)
-                ans[p][n-l-1] = cnt++;
-            // right -> left
-            for(int p=l+1; p<n-l; p++)
-                ans[n-l-1][n-p-1] = cnt++;
-            // bottom -> top
-            for(int p=l+1; p<n-l-1; p++)
-                ans[n-p-1][l] = cnt++;
+        int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int d=0, row=0, col=0;
+        while(cnt <= n*n) {
+            ans[row][col] = cnt++;
+            int r = Math.floorMod(row + dir[d][0], n);
+            int c = Math.floorMod(col + dir[d][1], n);
+            
+            // change dir if next cell is non zero
+            if(ans[r][c] != 0)
+                d = (d+1)%4;
+            row += dir[d][0];
+            col += dir[d][1];
         }
         return ans;
     }
