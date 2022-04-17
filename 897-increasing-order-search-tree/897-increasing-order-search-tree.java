@@ -14,20 +14,20 @@
  * }
  */
 class Solution {
+    // in the fly adding node to ans TreeNode
+    TreeNode curr;
     public TreeNode increasingBST(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        inorder(root, list);
-        TreeNode ans = new TreeNode(0), curr = ans;
-        for(int ele : list) {
-            curr.right = new TreeNode(ele);
-            curr = curr.right;
-        }
+        TreeNode ans = new TreeNode(0);
+        curr = ans;
+        inorder(root);
         return ans.right;
     }
-    public void inorder(TreeNode node, List<Integer> list) {
+    public void inorder(TreeNode node) {
         if(node == null) return;
-        inorder(node.left, list);
-        list.add(node.val);
-        inorder(node.right, list);
+        inorder(node.left);
+        node.left = null;
+        curr.right = node;
+        curr = node;
+        inorder(node.right);
     }
 }
