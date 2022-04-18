@@ -14,16 +14,18 @@
  * }
  */
 class Solution {
-    // recursive inorder traversal
+    // Iterative inorder traversal
     public int kthSmallest(TreeNode root, int k) {
-        List<Integer> ans = inorder(root, new ArrayList<Integer>());
-        return ans.get(k-1);
-    }
-    private List<Integer> inorder(TreeNode root, List<Integer> ans) {
-        if(root == null) return ans;
-        inorder(root.left, ans);
-        ans.add(root.val);
-        inorder(root.right, ans);
-        return ans;
+        LinkedList<TreeNode> st = new LinkedList<>();
+        while(true) {
+            while(root != null) {
+                st.push(root);
+                root = root.left;
+            }
+            root = st.pop();
+            if(--k == 0)
+                return root.val;
+            root = root.right;
+        }
     }
 }
