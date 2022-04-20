@@ -14,31 +14,29 @@
  * }
  */
 class BSTIterator {
-    // brute force T = O(n),  S = O(n)
-    ArrayList<Integer> list = new ArrayList<>();
-    int i=0;
+    // using stack T = O(h),  S = O(1)
+    Stack<TreeNode> st;
     public BSTIterator(TreeNode root) {
-        list = new ArrayList<Integer>();
-        inorder(root, list);
+        st = new Stack();
+        pushLeft(root);
     }
     
     public int next() {
-        int ans = list.get(i);
-        i++;
-        return ans;
+        TreeNode node = st.pop();
+        if(node.right != null)
+            pushLeft(node.right);
+        return node.val;
     }
     
     public boolean hasNext() {
-        if(i >= list.size()) return false;
-        return true;
+        return !st.isEmpty();
     }
     
-    private void inorder(TreeNode root, List<Integer> list) {
-        if(root == null) return;
-        
-        inorder(root.left, list);
-        list.add(root.val);
-        inorder(root.right, list);
+    private void pushLeft(TreeNode root) {
+        while(root != null) {
+            st.push(root);
+            root = root.left;
+        }
     }
 }
 
