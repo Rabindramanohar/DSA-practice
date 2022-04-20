@@ -14,7 +14,7 @@
  * }
  */
 class BSTIterator {
-
+    // brute force T = O(n),  S = O(n)
     ArrayList<Integer> list = new ArrayList<>();
     int i=0;
     public BSTIterator(TreeNode root) {
