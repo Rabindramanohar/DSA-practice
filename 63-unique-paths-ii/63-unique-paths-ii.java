@@ -1,5 +1,5 @@
 class Solution {
-    // recursion
+    // memoization
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int n = obstacleGrid.length, m = obstacleGrid[0].length;
         int[][] dp = new int[n][m];
