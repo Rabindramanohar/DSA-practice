@@ -1,6 +1,6 @@
 class Solution {
     public int findMaxForm(String[] strs, int m, int n) {
-        // memoization T = O(m*n);
+        // bottom up
         int[][] dp = new int[m+1][n+1];
         for(String s : strs) {
             int[] cnt = count(s);
