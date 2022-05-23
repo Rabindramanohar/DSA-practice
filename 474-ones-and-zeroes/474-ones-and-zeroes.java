@@ -1,21 +1,16 @@
 class Solution {
     public int findMaxForm(String[] strs, int m, int n) {
         // memoization T = O(m*n);
-        int[][][] dp = new int[m+1][n+1][strs.length];
-        return helper(strs, m, n, 0, dp);
-    }
-    private int helper(String[] strs, int m, int n, int idx, int[][][] dp) {
-        // base cases:
-        if(idx == strs.length || m+n == 0) return 0;
-        
-        if(dp[m][n][idx] > 0) return dp[m][n][idx];
-        int[] cnt = count(strs[idx]);
-        int taken = 0;
-        if(m >= cnt[0] && n >= cnt[1])
-            taken = 1 + helper(strs, m-cnt[0], n-cnt[1], idx+1, dp);
-        int notTaken = 0 + helper(strs, m, n, idx+1, dp);
-        
-        return dp[m][n][idx] = Math.max(taken, notTaken);
+        int[][] dp = new int[m+1][n+1];
+        for(String s : strs) {
+            int[] cnt = count(s);
+            for(int p=m; p>=cnt[0]; p--) {
+                for(int q=n; q>=cnt[1]; q--) {
+                    dp[p][q] = Math.max(dp[p-cnt[0]][q-cnt[1]] + 1, dp[p][q]);
+                }
+            }
+        }
+        return dp[m][n];
     }
     
     private int[] count(String s) {
