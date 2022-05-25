@@ -13,15 +13,19 @@ class Solution {
     }
     
     private int binarySearch(int[] arr, int l, int h, int k) {
-        while(l < h) {
-            int mid = l + (h-l)/2;
-            if(arr[mid] == k)
-                return mid;
-            else if(arr[mid] > k)
-                h=mid;
-            else
-                l=mid+1;
-        }
-        return l;
+        // while(l < h) {
+        //     int mid = l + (h-l)/2;
+        //     if(arr[mid] == k)
+        //         return mid;
+        //     else if(arr[mid] > k)
+        //         h=mid;
+        //     else
+        //         l=mid+1;
+        // }
+        // return l;
+        int idx = Arrays.binarySearch(arr, l, h, k);
+        if(idx < 0)
+            idx = -(idx+1);
+        return idx;
     }
 }
