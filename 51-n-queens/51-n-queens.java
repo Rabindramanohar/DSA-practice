@@ -1,6 +1,7 @@
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> ans = new ArrayList<>();
+        // creating board and initialize with '.';
         char[][] board = new char[n][n];
         for(int i=0; i<n; i++) {
             for(int j=0; j<n; j++) {
@@ -17,6 +18,7 @@ class Solution {
             return;
         }
         
+        // first check if current board[row][col] is valid to fill 'Q' then recursively fill.
         for(int row=0; row<board.length; row++) {
             if(isValid(board, row, col)) {
                 board[row][col] = 'Q';
@@ -26,6 +28,7 @@ class Solution {
         }
     }
     
+    // isValid will tell the curr board block is valid or not. Here we are checking with 3 condition 1. curr block till 0th col row-wise. 2. In North-west direction where row-- and col--, and check for 'Q' available or not. 3. In South-west directino where row++ and col--, and check for 'Q' is available or not.
     private boolean isValid(char[][] board, int row, int col) {
         int tmpRow = row, tmpCol = col;
         while(row >= 0 && col >=0) {
@@ -52,6 +55,7 @@ class Solution {
         return true;
     }
     
+    // construct is used to build board in string format and store in list.
     private List<String> construct(char[][] board) {
         List<String> ans = new ArrayList<>();
         for(int i=0; i<board.length; i++) {
