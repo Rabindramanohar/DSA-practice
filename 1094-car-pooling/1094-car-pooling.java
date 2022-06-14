@@ -1,5 +1,5 @@
 class Solution {
-    public boolean carPooling(int[][] trips, int capacity) {
+    public boolean carPooling(int[][] trips, int capacity) { 
         // find the largest value of locations
         int lastLocation = Integer.MIN_VALUE;
         for(int[] trip : trips) {
