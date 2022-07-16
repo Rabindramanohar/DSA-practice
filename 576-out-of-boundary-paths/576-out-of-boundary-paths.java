@@ -1,33 +1,18 @@
-public class Solution {
-    public int findPaths(int m, int n, int N, int i, int j) {
-        if (N <= 0) return 0;
-        
-        final int MOD = 1000000007;
-        int[][] count = new int[m][n];
-        count[i][j] = 1;
-        int result = 0;
-        
-        int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        
-        for (int step = 0; step < N; step++) {
-            int[][] temp = new int[m][n];
-            for (int r = 0; r < m; r++) {
-                for (int c = 0; c < n; c++) {
-                    for (int[] d : dirs) {
-                        int nr = r + d[0];
-                        int nc = c + d[1];
-                        if (nr < 0 || nr >= m || nc < 0 || nc >= n) {
-                            result = (result + count[r][c]) % MOD;
-                        }
-                        else {
-                            temp[nr][nc] = (temp[nr][nc] + count[r][c]) % MOD;
-                        }
-                    }
-                }
-            }
-            count = temp;
-        }
-        
-        return result;
+class Solution {
+    int mod = 1000000007;
+    public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        int[][][] dp = new int[m][n][maxMove+1];
+        for(int[][] ele : dp)
+            for(int[] e : ele)
+                Arrays.fill(e, -1);
+        return helper(m, n, maxMove, startRow, startColumn, dp);
+    }
+    private int helper(int m, int n, int N, int i, int j, int[][][] dp) {
+        if (i == m || j == n || i < 0 || j < 0) return 1;
+        if (N == 0) return 0;
+        if (dp[i][j][N] >= 0) return dp[i][j][N];
+        dp[i][j][N] = ((helper(m, n, N-1, i-1, j, dp) + helper(m, n, N-1, i+1, j, dp)) % mod 
+                       + (helper(m, n, N-1, i, j-1, dp) + helper(m, n, N-1, i, j+1, dp)) % mod) % mod;
+        return dp[i][j][N];
     }
 }
